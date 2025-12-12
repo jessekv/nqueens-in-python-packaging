@@ -1,27 +1,44 @@
 import argparse
 from argparse import ArgumentParser
+from importlib.metadata import distributions
 
 
 def main():
     parser = ArgumentParser()
     parser.add_argument(
-        "solution",
+        "-s",
+        "--solution",
         type=argparse.FileType("r"),
         help="requirements.txt without annotations with the solution",
+        required=False,
     )
     args = parser.parse_args()
 
-    lines = args.solution.read().splitlines()
-    grid_size = max(int(line.split("==")[1]) for line in lines)
-    grid: list[list[int | str]] = [
-        ["_" for _ in range(grid_size)] for _ in range(grid_size)
-    ]
-    for line in lines:
-        package, version = line.split("==")
-        _, x, y = package.split("-")
-        grid[int(y)][int(x)] = int(version)
-    for row in grid:
-        print(",".join((str(version) for version in row)))
+    queens = {}
+
+    if not args.solution:
+        for dist in distributions():
+            name = dist.metadata["Name"]
+            if name.startswith("queen"):
+                queens[name[6:]] = int(dist.version)
+    else:
+        for line in args.solution.read().splitlines():
+            if line.startswith("queen"):
+                col, row = line.split("==")
+                queens[col[6:]] = int(row)
+
+    print("   a b c d e f g h")
+    print(" ┌─────────────────┐")
+    for row in range(8, 0, -1):
+        print(f"{row}│", end="")
+        for col in "abcdefgh":
+            if queens.get(col) == row:
+                print(" Q", end="")
+            else:
+                print(" ·", end="")
+        print(f" │{row}")
+    print(" └─────────────────┘")
+    print("   a b c d e f g h")
 
 
 if __name__ == "__main__":
