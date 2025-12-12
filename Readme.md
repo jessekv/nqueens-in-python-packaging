@@ -29,9 +29,10 @@ dependencies = [
 
 ## Usage
 
-Define the requiements, optionally with some initial positions:
+Define the `requiements.in`, optionally with some initial positions:
 
-```
+```shell
+$ cat requirements.in
 queen-a
 queen-b
 queen-c==1
@@ -48,13 +49,8 @@ Solve it with your favourite package manager, e.g:
 uv pip compile --find-links packages/ --no-annotate --no-header requirements.in > requirements.txt
 ```
 
-or (slow)
-
 ```shell
-pip-compile --find-links packages/ --no-annotate --no-header requirements.in -o requirements.txt
-```
-
-```
+$ cat requirements.txt
 queen-a==5
 queen-b==3
 queen-c==1
@@ -68,10 +64,8 @@ queen-h==4
 Render the solution:
 
 ```shell
-python render_solution.py requirements.txt
-```
+$ python render_solution.py requirements.txt
 
-```
    a b c d e f g h
  ┌─────────────────┐
 8│ · · · · · Q · · │8
@@ -88,8 +82,7 @@ python render_solution.py requirements.txt
 
 Or as a oneliner:
 
-```console
-
+```shell
 $ uvx --find-links packages/ --with-requirements requirements.in python render_solution.py
 
    a b c d e f g h
@@ -104,5 +97,4 @@ $ uvx --find-links packages/ --with-requirements requirements.in python render_s
 1│ · · Q · · · · · │1
  └─────────────────┘
    a b c d e f g h
-
 ```
