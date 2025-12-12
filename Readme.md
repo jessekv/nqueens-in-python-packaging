@@ -13,7 +13,7 @@ Each position in the chessboard grid is a package `queen_{a-h}` and the version 
 
 ```toml
 [project]
-name = "sudoku"
+name = "nqueens"
 version = "1.0.0"
 dependencies = [
     "queen-a",
