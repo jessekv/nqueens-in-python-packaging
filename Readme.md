@@ -1,4 +1,4 @@
-# N Queens in Python Packaging
+# N-Queens in Python Packaging
 
 Solve N-queens not in python, but with python packages.
 
