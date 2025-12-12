@@ -49,6 +49,8 @@ Solve it with your favourite package manager, e.g:
 uv pip compile --find-links packages/ --no-annotate --no-header requirements.in > requirements.txt
 ```
 
+View the solution:
+
 ```shell
 $ cat requirements.txt
 queen-a==5
@@ -59,25 +61,6 @@ queen-e==2
 queen-f==8
 queen-g==6
 queen-h==4
-```
-
-Render the solution:
-
-```shell
-$ python render_solution.py requirements.txt
-
-   a b c d e f g h
- ┌─────────────────┐
-8│ · · · · · Q · · │8
-7│ · · · Q · · · · │7
-6│ · · · · · · Q · │6
-5│ Q · · · · · · · │5
-4│ · · · · · · · Q │4
-3│ · Q · · · · · · │3
-2│ · · · · Q · · · │2
-1│ · · Q · · · · · │1
- └─────────────────┘
-   a b c d e f g h
 ```
 
 Or as a oneliner:
