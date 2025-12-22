@@ -24,8 +24,8 @@ def exclude(column: int, row: int) -> str:
     return f"{to_name(column)} != {to_version(row)}"
 
 
-def get_exclusions(column: int, row: int) -> list[str]:
-    return [
+def get_exclusions(column: int, row: int):
+    return (
         exclude(c, r)
         for c, r in itertools.product(range(GRID_SIZE), repeat=2)
         if (
@@ -34,20 +34,22 @@ def get_exclusions(column: int, row: int) -> list[str]:
             # diagonal exclusion
             or ((d_c := abs(c - column)) == (d_r := abs(r - row)) and (d_c or d_r))
         )
-    ]
+    )
 
 
 def generate_package(column: int, row: int):
     name = to_name(column)
     version = to_version(row)
-    dependencies = get_exclusions(column, row)
 
     # Write the wheel
     filename = f"{name}-{version}-py3-none-any.whl"
     with ZipFile(PACKAGE_DIR.joinpath(filename), "w") as writer:
-        metadata = [f"Name: {name}", f"Version: {version}", "Metadata-Version: 2.2"]
-        for requires_dist in dependencies:
-            metadata.append(f"Requires-Dist: {requires_dist}")
+        metadata = [
+            f"Name: {name}",
+            f"Version: {version}",
+            "Metadata-Version: 2.2",
+            *(f"Requires-Dist: {d}" for d in get_exclusions(column, row)),
+        ]
         writer.writestr(f"{name}-{version}.dist-info/METADATA", "\n".join(metadata))
         writer.writestr(f"{name}-{version}.dist-info/WHEEL", WHEEL_FILE_CONTENTS)
         # Not checked anyway
