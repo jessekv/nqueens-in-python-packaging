@@ -40,22 +40,22 @@ def get_exclusions(column: int, row: int):
 def generate_package(column: int, row: int):
     name = to_name(column)
     version = to_version(row)
+    metadata = [
+        f"Name: {name}",
+        f"Version: {version}",
+        "Metadata-Version: 2.2",
+        *(f"Requires-Dist: {d}" for d in get_exclusions(column, row)),
+    ]
+    filename = f"{name}-{version}-py3-none-any.whl"
 
     # Write the wheel
-    filename = f"{name}-{version}-py3-none-any.whl"
     with ZipFile(PACKAGE_DIR.joinpath(filename), "w") as writer:
-        metadata = [
-            f"Name: {name}",
-            f"Version: {version}",
-            "Metadata-Version: 2.2",
-            *(f"Requires-Dist: {d}" for d in get_exclusions(column, row)),
-        ]
         writer.writestr(f"{name}-{version}.dist-info/METADATA", "\n".join(metadata))
         writer.writestr(f"{name}-{version}.dist-info/WHEEL", WHEEL_FILE_CONTENTS)
         # Not checked anyway
-        record = f"{name}-{version}.dist-info/METADATA,,"
-        record += f"{name}-{version}.dist-info/WHEEL,,"
-        record += f"{name}-{version}.dist-info/RECORD,,"
+        # record = f"{name}-{version}.dist-info/METADATA,,"
+        # record += f"{name}-{version}.dist-info/WHEEL,,"
+        # record += f"{name}-{version}.dist-info/RECORD,,"
         writer.writestr(f"{name}-{version}.dist-info/RECORD", "")
 
 
