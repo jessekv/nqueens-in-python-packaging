@@ -2,6 +2,8 @@
 
 Solve N-queens not in python, but with python packages.
 
+Obligatory Story: https://jessekv.com/post/n-queens-python-packaging/
+
 Inspired by:
 
 - https://github.com/konstin/sudoku-in-python-packaging (original source of this fork)
