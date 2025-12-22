@@ -13,22 +13,6 @@ Inspired by:
 
 Each position in the chessboard grid is a package `queen_{a-h}` and the version (1-8) is the row, so you can write a pyproject.toml and the installed packages are the solution.
 
-```toml
-[project]
-name = "nqueens"
-version = "1.0.0"
-dependencies = [
-    "queen-a",
-    "queen-b",
-    "queen-c",
-    "queen-d",
-    "queen-e",
-    "queen-f",
-    "queen-g",
-    "queen-h",
-]
-```
-
 ## Usage
 
 Define the `requiements.in`, optionally with some initial positions:
