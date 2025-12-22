@@ -11,7 +11,7 @@ Inspired by:
 - https://www.richard-towers.com/2023/03/11/typescripting-the-technical-interview.html
 
 
-Each position in the chessboard grid is a package `queen_{a-h}` and the version (1-8) is the row, so you can write a pyproject.toml and the installed packages are the solution.
+Each position in the chessboard grid is a package `queen_{a-h}` and the version (1-8) is the row, so you can write a `requiements.in` and the installed packages are the solution.
 
 ## Usage
 
