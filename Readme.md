@@ -18,7 +18,7 @@ Each position in the chessboard grid is a package `queen_{a-h}` and the version 
 Define the `requirements.in`, optionally with some initial positions:
 
 ```shell
-$ cat requirements.in
+# requirements.in
 queen-a
 queen-b
 queen-c==1
@@ -38,7 +38,7 @@ uv pip compile --find-links packages/ --no-annotate --no-header requirements.in 
 View the solution:
 
 ```shell
-$ cat requirements.txt
+# requirements.txt
 queen-a==5
 queen-b==3
 queen-c==1
