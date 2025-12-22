@@ -2,7 +2,7 @@
 
 Solve N-queens not in python, but with python packages.
 
-Obligatory Story: https://jessekv.com/post/n-queens-python-packaging/
+Obligatory Story: https://jessekv.com/post/packaging-the-technical-interview/
 
 Inspired by:
 
