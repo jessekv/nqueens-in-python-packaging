@@ -1,4 +1,4 @@
-import itertools
+from itertools import product
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -24,10 +24,10 @@ def exclude(column: int, row: int) -> str:
     return f"{to_name(column)} != {to_version(row)}"
 
 
-def get_exclusions(column: int, row: int):
+def get_exclusions(column: int, row: int, grid_size: int):
     return (
         exclude(c, r)
-        for c, r in itertools.product(range(GRID_SIZE), repeat=2)
+        for c, r in product(range(grid_size), repeat=2)
         if (
             # column exclusion (row exclusion is implicit)
             (r == row and c != column)
@@ -37,14 +37,14 @@ def get_exclusions(column: int, row: int):
     )
 
 
-def generate_package(column: int, row: int):
+def generate_package(column: int, row: int, grid_size: int):
     name = to_name(column)
     version = to_version(row)
     metadata = [
         f"Name: {name}",
         f"Version: {version}",
         "Metadata-Version: 2.2",
-        *(f"Requires-Dist: {d}" for d in get_exclusions(column, row)),
+        *(f"Requires-Dist: {d}" for d in get_exclusions(column, row, grid_size)),
     ]
     filename = f"{name}-{version}-py3-none-any.whl"
 
@@ -61,9 +61,8 @@ def generate_package(column: int, row: int):
 
 def main():
     PACKAGE_DIR.mkdir(exist_ok=True, parents=True)
-    for column in range(GRID_SIZE):
-        for row in range(GRID_SIZE):
-            generate_package(column, row)
+    for column, row in product(range(GRID_SIZE), repeat=2):
+        generate_package(column, row, GRID_SIZE)
 
 
 if __name__ == "__main__":
